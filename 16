@@ -1,0 +1,69 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
+class Student {
+    private String name;
+    private int graduationYear;
+    private int score;
+
+    public Student(String name, int graduationYear, int score) {
+        this.name = name;
+        this.graduationYear = graduationYear;
+        this.score = score;
+    }
+
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public int getGraduationYear() {
+        return graduationYear;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public String toString() {
+        return "Student[name='" + name + "', graduationYear=" + graduationYear + ", score=" + score + "]";
+    }
+}
+
+class Implementation {
+    public List<Student> studentsSorted(Collection<Student> students) {
+        return students.stream()
+                .sorted(Comparator.comparing(Student::getScore).reversed().thenComparing(Student::getName))
+                .collect(Collectors.toList());
+    }
+
+    public Map<Integer, List<Student>> studentsByYear(Collection<Student> students) {
+        return students.stream().collect(Collectors.groupingBy(Student::getGraduationYear));
+    }
+
+    public Student findOneBest(Collection<Student> students) {
+        return students.stream().max(Comparator.comparingInt(Student::getScore)).orElse(null);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Collection<Student> students = Arrays.asList(
+                new Student("S2014-11", 2014, 17),
+                new Student("S2014-18", 2014, 20),
+                new Student("S2013-18", 2013, 20)
+        );
+
+        Implementation implementation = new Implementation();
+
+        List<Student> sortedStudents = implementation.studentsSorted(students);
+        System.out.println(sortedStudents);
+
+        Map<Integer, List<Student>> studentsByYear = implementation.studentsByYear(students);
+        System.out.println(studentsByYear);
+
+        Student bestStudent = implementation.findOneBest(students);
+        System.out.println(bestStudent);
+    }
+}
