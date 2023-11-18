@@ -1,0 +1,61 @@
+class Rating {
+    int imdbRating;
+    int nominee;
+
+    public Rating(int imdbRating, int nominee) {
+        this.imdbRating = imdbRating;
+        this.nominee = nominee;
+    }
+}
+
+class Validator {
+    public String canBeConsideredForTheAward(Rating rating) throws MovieRatingException {
+        try {
+            if (rating.imdbRating < 7) {
+                throw new MovieRatingException("Movie not eligible for Filmfare award");
+            }
+
+            if (rating.nominee < 4) {
+                throw new MovieRatingException("Minimum 4 nominees required");
+            }
+
+            return "Considered for the award";
+        } catch (MovieRatingException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new MovieRatingException("Other exception");
+        }
+    }
+
+    public String sendInvite(Rating rating) {
+        try {
+            canBeConsideredForTheAward(rating);
+            return "Actors and Directors Invited";
+        } catch (MovieRatingException e) {
+            return "Not invited";
+        }
+    }
+}
+
+class MovieRatingException extends Exception {
+    public MovieRatingException(String msg) {
+        super(msg);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Rating rating = new Rating(9, 7);
+        Validator v = new Validator();
+
+        try {
+            String result1 = v.canBeConsideredForTheAward(rating);
+            System.out.println(result1);
+
+            String result2 = v.sendInvite(rating);
+            System.out.println(result2);
+        } catch (MovieRatingException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
