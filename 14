@@ -1,0 +1,101 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Company {
+    private String companyName;
+    private String type;
+    private int turnover;
+
+    public Company(String companyName, String type, int turnover) {
+        this.companyName = companyName;
+        this.type = type;
+        this.turnover = turnover;
+    }
+
+    // Getters and Setters
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getTurnover() {
+        return turnover;
+    }
+
+    public void setTurnover(int turnover) {
+        this.turnover = turnover;
+    }
+}
+
+class Record {
+    private List<Company> companies = new ArrayList<>();
+
+    public String addCompany(Company company) {
+        companies.add(company);
+        return "Added";
+    }
+
+    public String filterData(String query) {
+        String[] entities = query.split(" ");
+        if (entities.length < 3) {
+            return "Invalid query";
+        }
+
+        String attribute = entities[0];
+        String operator = entities[1];
+        String value = entities[2];
+
+        if (!operator.equals("==") && !operator.equals(">=") && !operator.equals("<=")) {
+            return "Invalid operator";
+        }
+
+        if (attribute.equals("type")) {
+            if (!operator.equals("==")) {
+                return "Invalid operator";
+            }
+            return byType(value);
+        } else {
+            return "Invalid attribute";
+        }
+    }
+
+    private String byType(String value) {
+        List<Company> filteredCompanies = new ArrayList<>();
+        for (Company company : companies) {
+            if (company.getType().equals(value)) {
+                filteredCompanies.add(company);
+            }
+        }
+
+        if (filteredCompanies.isEmpty()) {
+            return "No companies found";
+        } else {
+            return filteredCompanies.toString();
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Company c1 = new Company("Doselect", "IT", 300);
+        Record record = new Record();
+
+        String result = record.addCompany(c1);
+        System.out.println(result);
+
+        String query = "type == IT";
+        String filteredData = record.filterData(query);
+        System.out.println(filteredData);
+    }
+}
