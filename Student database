@@ -1,0 +1,41 @@
+import java.util.HashMap;
+
+class Student {
+    // data field
+    private HashMap<String, String> datalist = new HashMap<>();
+
+    // method to add student details
+    public String addStudentDetails(String name, String id) {
+        if (datalist.containsKey(name)) {
+            // Name already present in the map
+            return "Id generation Failed, name is already present in the database";
+        } else {
+            // Add data to the map
+            datalist.put(name, id);
+            return "Id Generated";
+        }
+    }
+
+    // method to delete student details
+    public String deleteId(String name) {
+        if (!datalist.containsKey(name)) {
+            // Student name not found in the map
+            return "Id not found";
+        } else {
+            // Delete student details
+            datalist.remove(name);
+            return "Id deleted successfully";
+        }
+    }
+
+    // method to search student id
+    public String searchId(String name) {
+        if (!datalist.containsKey(name)) {
+            // Student name not found in the map
+            return "Id not found";
+        } else {
+            // Return student id
+            return datalist.get(name);
+        }
+    }
+}
