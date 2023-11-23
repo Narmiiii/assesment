@@ -1,18 +1,31 @@
 import java.util.HashMap;
 
 class Dance {
+    // data member
     private HashMap<String, Integer> steps = new HashMap<>();
 
+    // method to add a new step or update existing step
     public String newStep(String name, int ways) {
-        if (steps.containsKey(name)) {
-            return "Step already exists";
-        } else {
+        if (!steps.containsKey(name)) {
+            // Step does not exist, create it
             steps.put(name, ways);
-            return "Step added";
+            return "New step";
+        } else {
+            // Step already exists, update the number of ways
+            steps.put(name, ways);
+            return "Stepped in";
         }
     }
 
+    // method to find the number of ways for a particular step
     public int findStep(String name) {
         return steps.getOrDefault(name, 0);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dance obj = new Dance();
+        System.out.println(obj.newStep("Step1", 9)); // Output: New step
     }
 }
