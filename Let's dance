@@ -1,0 +1,18 @@
+import java.util.HashMap;
+
+class Dance {
+    private HashMap<String, Integer> steps = new HashMap<>();
+
+    public String newStep(String name, int ways) {
+        if (steps.containsKey(name)) {
+            return "Step already exists";
+        } else {
+            steps.put(name, ways);
+            return "Step added";
+        }
+    }
+
+    public int findStep(String name) {
+        return steps.getOrDefault(name, 0);
+    }
+}
