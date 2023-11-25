@@ -1,0 +1,59 @@
+import java.util.ArrayList;
+
+class Source {
+    // Add items to groceryList
+    public void addItem(ArrayList<String> groceryList, String item) {
+        groceryList.add(item);
+    }
+
+    // Update the groceryList with newItem at the specified index
+    public String modifyItem(ArrayList<String> groceryList, int index, String newItem) {
+        if (index >= 0 && index < groceryList.size()) {
+            groceryList.set(index, newItem);
+            return "Item of index " + index + " has been modified.";
+        } else {
+            return "Invalid index.";
+        }
+    }
+
+    // Remove the item at the specified index from groceryList
+    public String removeItem(ArrayList<String> groceryList, int index) {
+        if (index >= 0 && index < groceryList.size()) {
+            groceryList.remove(index);
+            return "Item of index " + index + " has been removed.";
+        } else {
+            return "Invalid index.";
+        }
+    }
+
+    // Search for an item in groceryList
+    public String searchItem(ArrayList<String> groceryList, String searchItem) {
+        if (groceryList.contains(searchItem)) {
+            return searchItem;
+        } else {
+            return "No such item.";
+        }
+    }
+
+    // Return the size of groceryList
+    public int getSize(ArrayList<String> groceryList) {
+        return groceryList.size();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Source source = new Source();
+        ArrayList<String> groceryList = new ArrayList<>();
+
+        source.addItem(groceryList, "Fruit");
+        source.addItem(groceryList, "Vegetable");
+        source.addItem(groceryList, "Beverages");
+
+        System.out.println(source.modifyItem(groceryList, 1, "Fruitss"));
+        System.out.println(source.removeItem(groceryList, 1));
+        System.out.println(source.searchItem(groceryList, "Beverages"));
+        System.out.println(groceryList);
+        System.out.println(source.getSize(groceryList));
+    }
+}
